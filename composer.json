@@ -1,0 +1,16 @@
+{
+    "name": "eric/library",
+    "authors": [
+        {
+            "name": "Eric Closquet",
+            "email": "closquet.eric@live.be"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Controllers\\": "controllers/",
+            "Models\\": "models/"
+        }
+    }
+}

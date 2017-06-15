@@ -1,0 +1,6 @@
+/.DS_Store
+*.xml
+.idea
+outils-exercice
+/vendor/
+node_modules
