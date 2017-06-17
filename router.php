@@ -23,6 +23,6 @@ if (!in_array($method . '/' . $r . '/' . $a, $routes)){
 }
 
 //execute the route
-$controller_name = 'Controllers//' . ucfirst($r);
+$controller_name = 'Controllers\\' . ucfirst($r);
 $controller = new $controller_name;
 $data = call_user_func([$controller, $a]);

@@ -25,7 +25,7 @@ var gulp = require( "gulp" ),
 gulp.task( "images", function() {
     gulp.src( src.img + "/**" )
         .pipe( image() )
-        .pipe( gulp.dest( "assets/images" ) );
+        .pipe( gulp.dest( dest.img ) );
 } );
 
 // --- Task for styles
@@ -35,7 +35,7 @@ gulp.task( "css", function() {
         .pipe( sass().on( "error", sass.logError ) )
         .pipe( autoprefixer() )
         .pipe( csso() )
-        .pipe( gulp.dest( "assets/css" ) );
+        .pipe( gulp.dest( dest.css ) );
 } );
 
 

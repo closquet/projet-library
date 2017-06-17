@@ -18,7 +18,7 @@
     <body>
         <header role="banner" class="content">
             <h1 class="main-title" role="heading" aria-level="1">
-                <a class="main-title__home-link" href="/index.php" title="Aller sur la page d&rsquo;accueil">La bibliothèque/</a>
+                <a class="main-title__home-link" href="/" title="Aller sur la page d&rsquo;accueil">La bibliothèque</a>
             </h1>
             <a class="login-logout" href="/index.php?r=auth&a=<?php echo (isset($_SESSION['user']) ? 'getLogout' : 'getLogin') ?>"><?php echo (isset($_SESSION['user']) ? 'Déconnexion' : 'Connexion') ?></a>
         </header>
@@ -26,7 +26,10 @@
         <main role="main">
             <?php include $data['view'];?>
         </main>
+        <?php
+        //test
 
+        ?>
         <footer role="contentinfo">
             <p>Developed by Eric Closquet</p>
             <p>Copyright © 2017</p>

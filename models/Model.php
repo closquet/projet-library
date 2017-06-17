@@ -7,11 +7,12 @@ use \PDOException;
 
 class Model
 {
-    protected function connect_db(){
+    protected function connect_db()
+    {
         //get db info and check if exists
         $db_config = parse_ini_file(DB_INI_FILE);
         if (!$db_config) {
-            $this->error['connect_db'] = 'no db connection info found';
+            $this->errors['connect_db'] = 'db connection info not found';
             return null;
         }
         $db_host = $db_config['DB_HOST'];
@@ -31,13 +32,14 @@ class Model
                     ]
                 );
         }catch (PDOException $exception){
-            $this->error['connect_db_error'] = $exception->getMessage();
+            $this->errors['connect_db_error'] = $exception->getMessage();
             return null;
         }
     }
 
 
-    protected function sql_request($sql_prepare, $sql_param, $fetch_mode){
+    protected function sql_request($sql_prepare, $sql_param, $fetch_mode)
+    {
         //create a connection to the db and check it
         if (!$dbh = $this->connect_db()){
             return null;
@@ -46,7 +48,7 @@ class Model
         //execute the request and return result if $fetch_mode exists
         try{
             if (!$sth = $dbh->prepare($sql_prepare)){
-                $this->error['sql_request'] = 'sql prepare error';
+                $this->errors['sql_request'] = 'sql prepare error';
                 return null;
             }
             $sth->execute($sql_param);
@@ -55,10 +57,10 @@ class Model
             }
             $this->last_insert_id = $dbh->lastInsertId();
         }catch (PDOException $exception){
-            $this->error['sql_request'] = $exception->getMessage();
+            $this->errors['sql_request'] = $exception->getMessage();
         }
     }
 
 
-    
+
 }
