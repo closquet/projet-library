@@ -1,0 +1,14 @@
+.site-title{
+  color: $dark-gray;
+  border-bottom: 2px solid $red;
+  padding-bottom: 0.470532878em;
+
+  @media (max-width: 450px) {
+    width: 100%;
+  }
+
+  @media (max-width: 350px) {
+    font-size: 1.999em;
+    margin-top: 2em;
+  }
+}

@@ -1,0 +1,45 @@
+table{
+  border-collapse: collapse;
+  margin: 1em 0;
+  width: 100%;
+}
+
+th{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+td,th, caption{
+  padding: 1em 0.5em;
+  text-align: center;
+  border-bottom: 1px solid #F1F1F1;
+}
+
+caption{
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.book-title-col{
+  max-width: 11em;
+}
+
+$width: 900px, 730px, 600px, 440px;
+$col-name: isbn, lang, genre, editor;
+
+@for $i from 1 through 4 {
+  @media (max-width: nth($width, $i)) {
+    .book-#{nth($col-name, $i)}-col{
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+  }
+}
+
+

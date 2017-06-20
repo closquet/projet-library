@@ -1,0 +1,11 @@
+a{
+  color: $link-txt-color;
+  text-decoration: none;
+  font-weight: bold;
+  hyphens: none;
+
+  &:hover, &:focus{
+    color: $link-hover-txt-color;
+    cursor: pointer;
+  }
+}

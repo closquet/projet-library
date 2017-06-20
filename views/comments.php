@@ -1,42 +1,66 @@
 <?php
-    $com_nbr = count($data['coms']);
-    $com_page_nbr = floor($com_nbr / 5);
+    $items_to_paginate_amount = count($data['coms']);
+    $page_nbr = ceil($items_to_paginate_amount / 5);
     
 ?>
 
-
-<h2 class="search-title" role="heading" aria-level="2">
-    Les commentaires
-</h2>
-
-<?php if (isset($_SESSION['user'])): ?>
-    <h3 class="search-title" role="heading" aria-level="2">
-        Laisser un commentaire
-    </h3>
-<?php endif; ?>
-
-<h3 class="search-title" role="heading" aria-level="2">
-    Les commentaires des autres lecteurs
+<h3 class="result-title" id="result" role="heading" aria-level="2">
+    Les commentaires des lecteurs <?= count($data['coms']) ? '(' . count($data['coms']) . ')' : '';?>
 </h3>
 <?php if (!count($data['coms'])):  ?>
-    <p>Il n'y a pas encore de commentaires.</p>
+    <p class="no-coms">Il n'y a pas encore de commentaires.</p>
 <?php else: ?>
-    <div class="com-list">
-        <dl>
-            <?php  for ($com = intval($_REQUEST['com'] ?? 1), $i=0 ; ($i < 5) && ($com < $com_nbr) ; $com++,$i++): ?>
-                <dt><?= $data['coms'][$com-1]->firstname . ' ' . $data['coms'][$com]->lastname; ?></dt>
-                <dd><?= $data['coms'][$com-1]->comment; ?></dd>
+    <div class="items-list">
+        <ul>
+            <?php  for ($item = intval($_REQUEST['item'] ?? 0), $i=0 ; ($i < 5) && ($item < $items_to_paginate_amount) ; $item++,$i++): ?>
+                <li class="comment">
+                    <span class="comment__user">
+                        <?php $datepub = explode('-', explode(' ', $data['coms'][$item]->datepub)[0]) ?>
+                        Par <a href=""><?= $data['coms'][$item]->firstname . ' ' . $data['coms'][$item]->lastname;?></a> le <?= $datepub[2] . '/' . $datepub[1] . '/' . $datepub[0]; ?>
+                    </span>
+                    <span class="comment__content">
+                        <?= $data['coms'][$item]->comment; ?>
+                    </span>
+                </li>
             <?php endfor; ?>
-        </dl>
-        <?php if ($com_page_nbr > 1): ?>
-            <?php if ( $com > 6 ): ?>
-                <a href="?r=book&a=focus&id=<?= $data['book']->id;?>&com=<?= ($com - ($i + 5));?>">Pécédent</a>
-            <?php endif; ?>
-            <?php if ( ($com_nbr - $com)  > 1 ): ?>
-                <a href="?r=book&a=focus&id=<?= $data['book']->id;?>&com=<?= ($com);?>">Suivant</a>
-            <?php endif; ?>
-        <?php endif; ?>
+        </ul>
         
-       
+        <?php if ($page_nbr > 1): ?>
+            <div class="prev-next-container">
+                <?php if ( $item > 5 ): ?>
+                    <a class="prev" href="?r=book&a=focus&id=<?= $data['book']->id;?>&item=<?= ($item - ($i + 5));?>/#result">Pécédent</a>
+                <?php else: ?>
+                    <span class="prev prev--unavailable" title="Vous êtes à la première page">Pécédent</span>
+                <?php endif; ?>
+                <?php if ( $items_to_paginate_amount - $item): ?>
+                    <a class="next" href="?r=book&a=focus&id=<?= $data['book']->id;?>&item=<?= ($item);?>/#result">Suivant</a>
+                <?php else: ?>
+                    <span class="next next--unavailable" title="Vous êtes à la dernière page">Suivant</span>
+                <?php endif; ?>
+            </div>
+            <div class="page-num">
+                <?php for ($current_page = 1; $current_page <= $page_nbr; $current_page++): ?>
+                    <?php if ( ($_REQUEST['item'] ?? 0) == (($current_page * 5) - 5) ): ?>
+                        <span class="page-num__item--current" title="Page courante"><?= $current_page;?></span>
+                    <?php else: ?>
+                        <a class="page-num__item" href="?r=book&a=focus&id=<?= $data['book']->id;?>&item=<?= ($current_page * 5) - 5;?>/#result"><?= $current_page;?></a>
+                    <?php endif; ?>
+                <?php endfor; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+<?php if (isset($_SESSION['user'])): ?>
+    <div class="coms-form">
+        <h3 class="coms-form__title" role="heading" aria-level="2">
+            Laisser un itemmentaire
+        </h3>
+    </div>
+    
+<?php else: ?>
+    <div class="coms-form">
+        <h3 class="coms-form__title" role="heading" aria-level="2">
+            Connectez-vous pour laisser un itemmentaire
+        </h3>
     </div>
 <?php endif; ?>

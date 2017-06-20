@@ -1,0 +1,16 @@
+html{
+  background-color: $bcg-color;
+
+}
+
+body{
+  font-family: $system-fonts;
+  font-size: $global-font-size;
+  line-height: $global-line-height;
+  color: $global-txt-color;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: url(../img/main_bcg.png) center center fixed;
+}

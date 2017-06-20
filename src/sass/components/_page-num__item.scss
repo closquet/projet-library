@@ -1,0 +1,19 @@
+.page-num__item{
+
+  padding: 0.5em;
+  color: #BE2485;
+
+  &:hover{
+    color: #5E0055;
+  }
+
+  &--current{
+    color: #666;
+    padding: 0.2em 0.5em;
+    border-bottom: 1px solid #666;
+
+    &:hover{
+      color: #666;
+    }
+  }
+}

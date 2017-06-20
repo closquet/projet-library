@@ -2,44 +2,33 @@
 $items_to_paginate_amount = count($data['books']);
 $page_nbr = ceil($items_to_paginate_amount / 5);
 ?>
+
 <h2 class="page-title" role="heading" aria-level="2">
-    Notice complète de <?= $data['author']->author_name; ?>
+    Notice complète de <?= $data['editor']->editor_name; ?>
 </h2>
-<div class="author focus-subject">
-    <ul class="focus-subject__info-list">
-        <?php if ($data['author']->datebirth): ?>
-            <li>Date de naissance&nbsp;: <?php $bday = explode('-', $data['author']->datebirth); echo $bday[2] . '/' . $bday[1] . '/' . $bday[0]?></li>
-        <?php endif; ?>
-        <?php if ($data['author']->datedeath): ?>
-            <li>Date de décès&nbsp;: <?php $dday = explode('-', $data['author']->datedeath); echo $dday[2] . '/' . $dday[1] . '/' . $dday[0]?></li>
-        <?php endif; ?>
-    </ul>
+
+<div class="editor focus-subject">
+    
     <div class="focus-subject__header">
-        <?php if ($data['author']->photo): ?>
-            <img class="focus-subject__img" src="<?= $data['author']->photo; ?>" alt="la photo portait de l&rsquo;auteur." title="la photo portait de l&rsquo;auteur.">
+        <?php if ($data['editor']->logo): ?>
+            <img class="focus-subject__img" src="<?= $data['editor']->logo; ?>" alt="le logo de l&rsquo;éditeur." title="le logo de l&rsquo;éditeur.">
         <?php else: ?>
-            <img class="focus-subject__img" src="/assets/img/authors/default.jpg" alt="la photo portait de l&rsquo;auteur n&rsquo;a pas été fournie." title="la photo portait de l&rsquo;auteur n&rsquo;a pas été fournie.">
+            <img class="focus-subject__img" src="/assets/img/editors/default.jpg" alt="le logo de l&rsquo;éditeur n&rsquo;a pas été fourni." title="le logo de l&rsquo;éditeur n&rsquo;a pas été fourni.">
         <?php endif; ?>
-        <div class="author__biography">
-            <h3 class="author__biography__title" role="heading" aria-level="3">
-                Courte Biographie
-            </h3>
-            <p class="author__biography__content">
-                <?= $data['author']->bio; ?>
-            </p>
-        </div>
+        <?php if ($data['editor']->website): ?>
+            <p class="focus-subject__info-list">Leur site web&nbsp;: <a href="<?= $data['editor']->website; ?>"><?= $data['editor']->website; ?></a></p>
+        <?php endif; ?>
     </div>
     
-    
-    <h3 class="search-title result-title" role="heading" aria-level="3">
-        &OElig;vres de cet auteur dont nous avons un exemplaire
+    <h3 class="result-title" role="heading" aria-level="3">
+        &OElig;vres éditées par cette maison d'édition
     </h3>
     
-    <table id="result">
+    <table>
         <caption><?= count($data['books']) == 0 ? 'Aucun livres' : (count($data['books']) == 1 ? '1 livre' : count($data['books']) . ' livres trouvés');?></caption>
         <tr>
             <th class="book-title-col" scope="col">Titre</th>
-            <th class="book-editor-col" scope="col">Éditeur</th>
+            <th class="book-author-col" scope="col">Auteur</th>
             <th class="book-isbn-col" scope="col">ISBN</th>
             <th class="book-genre-col" scope="col">Genre</th>
             <th class="book-lang-col" scope="col">Langue</th>
@@ -47,7 +36,7 @@ $page_nbr = ceil($items_to_paginate_amount / 5);
         <?php for ($item = intval($_REQUEST['item'] ?? 0), $i=0 ; ($i < 5) && ($item < $items_to_paginate_amount) ; $item++,$i++): ?>
             <tr>
                 <td class="book-title-col"><a href="?r=book&a=focus&id=<?= $data['books'][$item]->book_id;?>"><?= $data['books'][$item]->title;?></a></td>
-                <td class="book-editor-col"><a href="?r=editor&a=focus&editor_id=<?= $data['books'][$item]->editor_id;?>"><?= $data['books'][$item]->editor_name;?></a></td>
+                <td class="book-author-col"><a href="?r=author&a=focus&author_id=<?= $data['books'][$item]->author_id;?>"><?= $data['books'][$item]->author_name;?></a></td>
                 <td class="book-isbn-col"><?= $data['books'][$item]->isbn;?></td>
                 <td class="book-genre-col"><?= $data['books'][$item]->genre_name;?></td>
                 <td class="book-lang-col"><?= $data['books'][$item]->full_name;?></td>
@@ -57,12 +46,12 @@ $page_nbr = ceil($items_to_paginate_amount / 5);
     <?php if ($page_nbr > 1): ?>
         <div class="prev-next-container">
             <?php if ( $item > 5 ): ?>
-                <a class="prev" href="?r=author&a=focus&item=<?= ($item - ($i + 5));?>&author_id=<?= $data['author']->id;?>/#result">Pécédent</a>
+                <a class="prev" href="?r=editor&a=focus&item=<?= ($item - ($i + 5));?>&editor_id=<?= $data['editor']->id;?>">Pécédent</a>
             <?php else: ?>
                 <span class="prev prev--unavailable" title="Vous êtes à la première page">Pécédent</span>
             <?php endif; ?>
             <?php if ( $items_to_paginate_amount - $item ): ?>
-                <a class="next" href="?r=author&a=focus&item=<?= ($item);?>&author_id=<?= $data['author']->id;?>/#result">Suivant</a>
+                <a class="next" href="?r=editor&a=focus&item=<?= ($item);?>&editor_id=<?= $data['editor']->id;?>">Suivant</a>
             <?php else: ?>
                 <span class="next next--unavailable" title="Vous êtes à la dernière page">Suivant</span>
             <?php endif; ?>
@@ -72,7 +61,7 @@ $page_nbr = ceil($items_to_paginate_amount / 5);
                 <?php if ( ($_REQUEST['item'] ?? 0) == (($current_page * 5) - 5) ): ?>
                     <span class="page-num__item--current" title="Page courante"><?= $current_page;?></span>
                 <?php else: ?>
-                    <a class="page-num__item" href="?r=author&a=focus&author_id=<?= $data['author']->id;?>&item=<?= ($current_page * 5) - 5;?>/#result"><?= $current_page;?></a>
+                    <a class="page-num__item" href="?r=editor&a=focus&editor_id=<?= $data['editor']->id;?>&item=<?= ($current_page * 5) - 5;?>/#result"><?= $current_page;?></a>
                 <?php endif; ?>
             <?php endfor; ?>
         </div>

@@ -15,8 +15,8 @@ class Author extends Controller
     
     public function focus()
     {
-        $author = $this->author_model->get_an_author($_REQUEST['id']);
-        $books = $this->book_model->get_books('', $_REQUEST['author'], '', '', '');
+        $author = $this->author_model->get_an_author($_REQUEST['author_id']);
+        $books = $this->book_model->get_books_of_an_author($_REQUEST['author_id']);
         $errors = $this->author_model->errors ?? false;
         if ($errors){
             return ['view' => 'views/errors.php', 'errors' => $errors];
