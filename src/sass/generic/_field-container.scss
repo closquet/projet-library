@@ -1,8 +1,10 @@
 .field-container{
   position: relative;
+  margin-right: 1.5em;
 
   @media (max-width: 450px) {
-    width: 80%;
+    width: 90%;
+    margin-right: 0;
   }
 
   @media (max-width: 300px) {

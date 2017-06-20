@@ -43,14 +43,17 @@ $page_nbr = ceil($items_to_paginate_amount / 5);
             <th class="book-isbn-col" scope="col">ISBN</th>
             <th class="book-genre-col" scope="col">Genre</th>
             <th class="book-lang-col" scope="col">Langue</th>
+            <th class="book-place-col" scope="col">Emplacement</th>
         </tr>
         <?php for ($item = intval($_REQUEST['item'] ?? 0), $i=0 ; ($i < 5) && ($item < $items_to_paginate_amount) ; $item++,$i++): ?>
             <tr>
                 <td class="book-title-col"><a href="?r=book&a=focus&id=<?= $data['books'][$item]->book_id;?>"><?= $data['books'][$item]->title;?></a></td>
                 <td class="book-editor-col"><a href="?r=editor&a=focus&editor_id=<?= $data['books'][$item]->editor_id;?>"><?= $data['books'][$item]->editor_name;?></a></td>
-                <td class="book-isbn-col"><?= $data['books'][$item]->isbn;?></td>
-                <td class="book-genre-col"><?= $data['books'][$item]->genre_name;?></td>
-                <td class="book-lang-col"><?= $data['books'][$item]->full_name;?></td>
+                <td class="book-isbn-col"><a href="?r=book&a=focus&id=<?= $data['books'][$item]->book_id;?>"><?= $data['books'][$item]->isbn;?></a></td>
+                <td class="book-genre-col"><a href="?r=book&a=index&title=&author=&editor=&isbn=&lang=&genre=<?= $data['books'][$item]->genre_name; ?>&place=&item=0/#result"><?= $data['books'][$item]->genre_name;?></a></td>
+                <td class="book-lang-col"><a href="?r=book&a=index&title=&author=&editor=&isbn=&genre=&lang=<?= $data['books'][$item]->code;?>&place=&item=0/#result"><?= $data['books'][$item]->full_name;?></a></td>
+                <td class="book-place-col"><a href="?r=book&a=index&title=&author&editor=&isbn=&genre=&lang=&place=<?= $data['books'][$item]->location_code; ?>&item=0/#result"><?= $data['books'][$item]->location_name;?></a></td>
+
             </tr>
         <?php endfor; ?>
     </table>

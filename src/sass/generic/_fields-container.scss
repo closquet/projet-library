@@ -1,10 +1,10 @@
 .fields-container{
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  //justify-content: space-between;
   flex-wrap: wrap;
 
   @media (max-width: 1202px) {
-    justify-content: space-around;
+    //justify-content: space-around;
   }
 }

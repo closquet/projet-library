@@ -20,7 +20,7 @@
             <h1 class="site-title" role="heading" aria-level="1">
                 <a class="site-title__home-link" href="/" title="Aller sur la page d&rsquo;accueil">La bibliothèque</a>
             </h1>
-            <a class="login-logout" href="/index.php?r=auth&a=<?php echo (isset($_SESSION['user']) ? 'getLogout' : 'getLogin') ?>"><?php echo (isset($_SESSION['user']) ? 'Déconnexion' : 'Connexion') ?></a>
+            <a class="login-logout" href="/index.php?r=auth&a=<?php echo (isset($_SESSION['user']) ? 'get_logout' : 'get_login') ?>"><?php echo (isset($_SESSION['user']) ? 'Déconnexion' : 'Connexion') ?></a>
         </header>
 
         <main role="main">

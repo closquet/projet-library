@@ -16,7 +16,7 @@
                 <li class="comment">
                     <span class="comment__user">
                         <?php $datepub = explode('-', explode(' ', $data['coms'][$item]->datepub)[0]) ?>
-                        Par <a href=""><?= $data['coms'][$item]->firstname . ' ' . $data['coms'][$item]->lastname;?></a> le <?= $datepub[2] . '/' . $datepub[1] . '/' . $datepub[0]; ?>
+                        Par <span class="comment__user__name"><?= $data['coms'][$item]->firstname . ' ' . $data['coms'][$item]->lastname;?></span> le <?= $datepub[2] . '/' . $datepub[1] . '/' . $datepub[0]; ?>
                     </span>
                     <span class="comment__content">
                         <?= $data['coms'][$item]->comment; ?>

@@ -24,10 +24,10 @@ caption{
   max-width: 11em;
 }
 
-$width: 900px, 730px, 600px, 440px;
-$col-name: isbn, lang, genre, editor;
+$width: 900px, 730px, 600px, 560px, 440px;
+$col-name: isbn, lang, genre, editor, place;
 
-@for $i from 1 through 4 {
+@for $i from 1 through 5 {
   @media (max-width: nth($width, $i)) {
     .book-#{nth($col-name, $i)}-col{
       border: 0;
