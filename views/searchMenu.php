@@ -84,3 +84,6 @@
     <input type="submit">
 </form>
 <?php if (isset($data['books']))include 'views/searchResults.php';?>
+
+<?php if ( isset($_SESSION['user']) && $_SESSION['user']->account_type_id == 2 ) include 'views/addNewAuthor.php'; ?>
+    

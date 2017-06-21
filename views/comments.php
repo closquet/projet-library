@@ -53,14 +53,25 @@
 <?php if (isset($_SESSION['user'])): ?>
     <div class="coms-form">
         <h3 class="coms-form__title" role="heading" aria-level="2">
-            Laisser un itemmentaire
+            Laisser un commentaire
         </h3>
+        <form class="comment-form" action="/" method="post">
+            <input type="hidden" name="r" value="comment">
+            <input type="hidden" name="a" value="post_comment">
+            <input type="hidden" name="book_id" value="<?= $data['book']->id;?>">
+
+                <div>
+                    <label for="comment-field">Votre commentaire (350 caractères)</label>
+                    <textarea class="form-field comment-field" name="comment" id="comment-field" maxlength="350" placeholder="Votre commentaire ici&hellip;" s></textarea>
+                </div>
+            <input type="submit">
+        </form>
     </div>
     
 <?php else: ?>
     <div class="coms-form">
         <h3 class="coms-form__title" role="heading" aria-level="2">
-            Connectez-vous pour laisser un itemmentaire
+            Connectez-vous pour laisser un commentaire
         </h3>
     </div>
 <?php endif; ?>

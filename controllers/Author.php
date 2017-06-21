@@ -23,4 +23,22 @@ class Author extends Controller
         }
         return [ 'view' => 'views/focusAuthor.php', 'books' => $books, 'author' => $author ];
     }
+    
+    
+    public function add()
+    {
+        
+        $this->check_session();
+        
+        $genres = $this->book_model->get_genres();
+        $langs = $this->book_model->get_langs();
+        $places = $this->book_model->get_places();
+        $this->author_model->add_author();
+        $errors = $this->author_model->errors ?? false;
+        if ($errors){
+            return ['view' => 'views/errors.php', 'errors' => $errors];
+        }
+        return ['view' => 'views/searchMenu.php', 'genres' => $genres, 'langs' => $langs, 'places' => $places];
+        
+    }
 }

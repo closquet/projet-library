@@ -51,6 +51,7 @@ class Book extends Model
                         AND genre_name LIKE :genre
                         AND languages.code LIKE :lang_code
                         AND locations.location_code LIKE :place
+                        AND  ec_library.books.deleted_at IS NULL 
                         
                         ';
         $sql_param = [ ':title' => '%' . $title . '%', ':author' => '%' . $author . '%', ':editor' => '%' . $editor . '%', ':isbn' => '%' . $isbn . '%', ':genre' => '%' . $genre . '%', ':lang_code' => '%' . $lang_code . '%', ':place' => '%' . $place . '%' ];
@@ -69,7 +70,8 @@ class Book extends Model
                         JOIN ec_library.genres ON ec_library.genres.id = ec_library.books.genre_id
                         JOIN ec_library.languages ON ec_library.languages.id = ec_library.books.language_id
                         JOIN ec_library.locations ON ec_library.locations.id = ec_library.books.location_id
-                        WHERE ec_library.authors.id = :author';
+                        WHERE ec_library.authors.id = :author
+                        AND  ec_library.books.deleted_at IS NULL ';
         
         $sql_param = [ ':author' => $author_id ];
         $fetch_mode = 'fetchAll';
@@ -87,7 +89,8 @@ class Book extends Model
                         JOIN ec_library.genres ON ec_library.genres.id = ec_library.books.genre_id
                         JOIN ec_library.languages ON ec_library.languages.id = ec_library.books.language_id
                         JOIN ec_library.locations ON ec_library.locations.id = ec_library.books.location_id
-                        WHERE ec_library.editors.id = :editor';
+                        WHERE ec_library.editors.id = :editor
+                        AND  ec_library.books.deleted_at IS NULL ';
         
         $sql_param = [ ':editor' => $editor_id ];
         $fetch_mode = 'fetchAll';
@@ -120,6 +123,15 @@ class Book extends Model
                         WHERE ec_library.book_rating.book_id = :id';
         $sql_param = [':id' => $id];
         $fetch_mode = 'fetchAll';
+    
+        return $this->sql_request($sql_prepare, $sql_param, $fetch_mode);
+    }
+    
+    
+    public function delete_book($id){
+        $sql_prepare = 'UPDATE ec_library.books SET deleted_at = CURRENT_TIMESTAMP WHERE id = :id';
+        $sql_param = [':id' => $id];
+        $fetch_mode = false;
     
         return $this->sql_request($sql_prepare, $sql_param, $fetch_mode);
     }

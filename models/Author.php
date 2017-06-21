@@ -14,4 +14,20 @@ class Author extends Model
         
         return $this->sql_request($sql_prepare, $sql_param, $fetch_mode);
     }
+    
+    
+    public function add_author()
+    {
+        $name = $_REQUEST['name'];
+        $birth = $_REQUEST['birthdate'];
+        $death = $_REQUEST['deathdate'];
+        $bio = $_REQUEST['bio'];
+            
+        $sql_prepare = 'INSERT INTO ec_library.authors (author_name, datebirth, datedeath, bio) VALUES (:name, :birth, :death, :bio);
+';
+        $sql_param = [':name' => $name, ':birth' => $birth, ':death' => $death, ':bio' => $bio, ];
+        $fetch_mode = false;
+    
+        return $this->sql_request($sql_prepare, $sql_param, $fetch_mode);
+    }
 }

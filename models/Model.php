@@ -60,6 +60,28 @@ class Model
             $this->errors['sql_request'] = $exception->getMessage();
         }
     }
+    
+    
+    protected function insert($tab, $col, $val){
+        $val_part = explode(', ', $val);
+        $i=1;
+        $prepare_val = '';
+        $sql_param = [];
+        foreach ($val_part as $item){
+            if($i > 1){
+                $prepare_val .= ', ' . (':val' . $i++);
+            }else{
+                $prepare_val .= (':val' . $i++);
+            }
+            $sql_param[':val' . ($i-1)] = $item;
+        }
+        
+        
+        
+        $sql_prepare = sprintf('INSERT INTO %s(%s) VALUES(%s)', $tab, $col, $prepare_val);
+        $fetch_mode = false;
+        $this->sql_request($sql_prepare, $sql_param, $fetch_mode);
+    }
 
 
 
